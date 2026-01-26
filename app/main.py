@@ -11,7 +11,7 @@ FORM_HTML = """<!doctype html>
     <title>Azure Lern-Formular</title>
   </head>
   <body>
-    <h1>Willkommen</h1>
+    <h1>Willkommen Patschi</h1>
     <p>Bitte gib deine Daten ein:</p>
     <form method="post" action="/submit">
       <label for="name">Name</label>
