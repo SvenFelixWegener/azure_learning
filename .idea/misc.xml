@@ -3,7 +3,7 @@
   <component name="Black">
     <option name="sdkName" value="Python 3.14 (Azure-AI-learning-path)" />
   </component>
-  <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.14 (Azure-AI-learning-path)" project-jdk-type="Python SDK">
+  <component name="ProjectRootManager" version="2" default="true" project-jdk-name="Python 3.14 (Azure-AI-learning-path)" project-jdk-type="Python SDK">
     <output url="file://$PROJECT_DIR$/out" />
   </component>
 </project>
