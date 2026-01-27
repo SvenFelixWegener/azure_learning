@@ -1,6 +1,8 @@
+ai==1.2
 annotated-doc==0.0.4
 annotated-types==0.7.0
 anyio==4.12.1
+azure-ai-inference==1.0.0b9
 azure-core==1.38.0
 azure-identity==1.25.1
 azure-keyvault-secrets==4.10.0
