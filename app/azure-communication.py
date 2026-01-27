@@ -6,7 +6,7 @@ from openai import AzureOpenAI
 
 DEFAULT_SYSTEM_PROMPT = "You are a helpful assistant. Be concise and stay respectful."
 DEFAULT_API_VERSION = "2024-12-01-preview"
-DEFAULT_SECRET_NAME = "api-key-value"
+DEFAULT_SECRET_NAME = "api-key-ai"
 
 
 class AzureChatClient:
