@@ -1,7 +1,7 @@
+from azure.ai.inference import ChatCompletionsClient
+from azure.core.credentials import AzureKeyCredential
 from azure.identity import DefaultAzureCredential
 from azure.keyvault.secrets import SecretClient
-from azure.core.credentials import AzureKeyCredential
-from azure.ai.inference import ChatCompletionsClient
 
 DEFAULT_SYSTEM_PROMPT = "You are a helpful assistant. Be concise and stay respectful."
 DEFAULT_SECRET_NAME = "api-key-ai"
@@ -40,19 +40,20 @@ class AzureChatClient:
             model=model,
         )
 
-    def get_chat_response(
-            self,
-            prompt: str,
-            *,
-            system_prompt: str = DEFAULT_SYSTEM_PROMPT,
-            max_tokens: int = 1024,
-    ) -> str:
-        response = self._client.complete(
-            model=self._model,  # gpt-5.2-chat
-            messages=[
-                {"role": "system", "content": system_prompt},
-                {"role": "user", "content": prompt},
-            ],
-            max_tokens=max_tokens,
-        )
-        return response.choices[0].message.content or ""
+
+def get_chat_response(
+        self,
+        prompt: str,
+        *,
+        system_prompt: str = DEFAULT_SYSTEM_PROMPT,
+        max_tokens: int = 1024,
+) -> str:
+    response = self._client.complete(
+        model=self._model,  # gpt-5.2-chat
+        messages=[
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": prompt},
+        ],
+        max_tokens=max_tokens,
+    )
+    return response.choices[0].message.content or ""
