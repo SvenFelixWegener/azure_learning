@@ -1,4 +1,3 @@
-import os
 from azure.identity import DefaultAzureCredential
 from azure.keyvault.secrets import SecretClient
 from azure.core.credentials import AzureKeyCredential
@@ -49,7 +48,7 @@ class AzureChatClient:
             max_tokens: int = 1024,
     ) -> str:
         response = self._client.complete(
-            model=self._model,  # ✅ gpt-5.2-chat
+            model=self._model,  # gpt-5.2-chat
             messages=[
                 {"role": "system", "content": system_prompt},
                 {"role": "user", "content": prompt},
