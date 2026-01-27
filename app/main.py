@@ -181,7 +181,7 @@ def form():
 
 
 def _load_azure_communication():
-    module_path = Path(__file__).with_name("azure-communication.py")
+    module_path = Path(__file__).with_name("azure_communication.py")
     spec = importlib.util.spec_from_file_location("azure_communication", module_path)
     if spec is None or spec.loader is None:
         raise ImportError("Could not load azure-communication module.")
