@@ -42,7 +42,6 @@ class AzureChatClient:
 
 
 def get_chat_response(
-        self,
         prompt: str,
         *,
         system_prompt: str = DEFAULT_SYSTEM_PROMPT,
