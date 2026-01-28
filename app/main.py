@@ -55,7 +55,7 @@ def _render_page(
         font-family: "Segoe UI", system-ui, sans-serif;
         margin: 0;
         padding: 32px;
-        background: radial-gradient(circle at top, var(--bg), 0%, #0b1020 55%);
+        background: radial-gradient(circle at top, #f3eaed 0%, #f3eaed 55%);
         color: var(--text);
       }}
       .container {{
