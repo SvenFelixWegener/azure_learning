@@ -40,8 +40,13 @@ class AzureChatClient:
             model=model,
         )
 
+def get_response(
+        prompt: str
+) -> str:
+    return get_chat_response(prompt)
 
 def get_chat_response(
+        self,
         prompt: str,
         *,
         system_prompt: str = DEFAULT_SYSTEM_PROMPT,

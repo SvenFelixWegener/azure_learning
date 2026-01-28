@@ -159,7 +159,7 @@ def _render_page(
             </div>
             <div>
               <label for="email">E-Mail</label>
-              <input id="email" name="email" type="email" required />
+              <input id="email" name="email" type="email" />
             </div>
           </div>
           <div>
@@ -198,7 +198,7 @@ def submit(
 ):
     azure_module = _load_azure_communication()
     try:
-        response_text = azure_module.get_chat_response(message)
+        response_text = azure_module.get_response(message)
         return _render_page(name=name, message=message, response_text=response_text)
     except ValueError as exc:
         return _render_page(name=name, message=message, error_text=str(exc))
