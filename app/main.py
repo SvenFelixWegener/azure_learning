@@ -34,17 +34,22 @@ def _render_page(
     <style>
       :root {{
         color-scheme: light dark;
-        --bg: #1b1416;              /* sehr dunkles warmes Rosé-Braun */
-        --panel: #23181c;           /* Panels, leicht heller */
-        --card: #2b1d22;            /* Karten mit Tiefe */
-        --border: #3a2a30;          /* dezente, warme Border */
-        --text: #f2e9ec;            /* warmes Off-White */
-        --muted: #c3aab2;           /* staubiges Rosé-Grau */
-        --accent: #b68a97;          /* Alt-Rosa Akzent (Hauptfarbe) */
-        --accent-strong: #9e6f7d;   /* kräftiger Mauve-Ton */
-        --assistant: #2f2026;       /* Assistant Bubble (ruhig, neutral) */
-        --user: #8f5d6b;            /* User Bubble (klar, aber nicht laut) */
-        --shadow: 0 18px 40px rgba(15, 23, 42, 0.45);
+       --bg: #f3eaed;          /* warmes Off-White */
+       --panel: #22171a;       /* Panel leicht heller, kein Blau */
+       --card: #2a1c20;        /* Kartenfläche */
+       --border: #3a262c;      /* warme Border, leicht rötlich */
+       /* Text */
+       --text: #f3eaed;        /* warmes Off-White */
+       --muted: #c7aeb6;       /* staubiges Rosé-Grau */
+       /* Akzent */
+       --accent: #b98d9b;      /* Alt-Rosa */
+       --accent-strong: #9f6e7d;
+       /* Chat-Bubbles */
+       --assistant: #2f2025;   /* warmes Aubergine-Braun */
+       --user: #8e5a69;        /* Rosé-Mauve (deutlich, aber ruhig) */
+       /* Inputs / Textareas */
+       --input-bg: #24171b;    /* wichtig: KEIN Blau mehr */
+       --input-border: #4a3038;
       }}
       body {{
         font-family: "Segoe UI", system-ui, sans-serif;
