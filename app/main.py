@@ -34,16 +34,16 @@ def _render_page(
     <style>
       :root {{
         color-scheme: light dark;
-        --bg: #0b1020;
-        --panel: #111827;
-        --card: #0f172a;
-        --border: #1f2937;
-        --text: #e5e7eb;
-        --muted: #94a3b8;
-        --accent: #6366f1;
-        --accent-strong: #4f46e5;
-        --assistant: #1f2a44;
-        --user: #1d4ed8;
+        --bg: #1b1416;              /* sehr dunkles warmes Rosé-Braun */
+        --panel: #23181c;           /* Panels, leicht heller */
+        --card: #2b1d22;            /* Karten mit Tiefe */
+        --border: #3a2a30;          /* dezente, warme Border */
+        --text: #f2e9ec;            /* warmes Off-White */
+        --muted: #c3aab2;           /* staubiges Rosé-Grau */
+        --accent: #b68a97;          /* Alt-Rosa Akzent (Hauptfarbe) */
+        --accent-strong: #9e6f7d;   /* kräftiger Mauve-Ton */
+        --assistant: #2f2026;       /* Assistant Bubble (ruhig, neutral) */
+        --user: #8f5d6b;            /* User Bubble (klar, aber nicht laut) */
         --shadow: 0 18px 40px rgba(15, 23, 42, 0.45);
       }}
       body {{
