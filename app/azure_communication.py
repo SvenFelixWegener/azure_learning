@@ -38,24 +38,6 @@ logger.setLevel(logging.INFO)
 DEFAULT_SYSTEM_PROMPT = "You are a helpful assistant. Be concise and stay respectful."
 DEFAULT_SECRET_NAME = "api-key-ai"
 
-
-def _normalize_inference_endpoint(endpoint: str) -> str:
-    """Ensure endpoint is a valid base URL for azure-ai-inference.
-
-    Many Azure resources expose multiple hostnames. For Foundry Models / AI Services,
-    your endpoint should usually be on *.services.ai.azure.com (NOT *.cognitiveservices.azure.com).
-
-    The inference SDK commonly uses the /models base route.
-    """
-    endpoint = endpoint.strip().rstrip("/")
-    if endpoint.endswith("/models"):
-        return endpoint
-
-    # If caller accidentally passed an Azure OpenAI-style endpoint (or root),
-    # normalize to /models to avoid 404 "Resource not found".
-    return f"{endpoint}/models"
-
-
 @dataclass(frozen=True)
 class Settings:
     endpoint: str
@@ -84,7 +66,7 @@ def _load_settings() -> Settings:
     api_key = os.getenv("AZURE_AI_API_KEY") or os.getenv("AZURE_OPENAI_API_KEY")
     if api_key:
         return Settings(
-            endpoint=_normalize_inference_endpoint(endpoint),
+            endpoint=endpoint,
             model=model,
             api_key=api_key,
             api_version=api_version,
@@ -110,7 +92,7 @@ def _load_settings() -> Settings:
     logger.info("  API Version: %s", api_version)
 
     return Settings(
-        endpoint=_normalize_inference_endpoint(endpoint),
+        endpoint=endpoint,
         model=model,
         api_key=api_key,
         api_version=api_version,
@@ -121,7 +103,7 @@ class AzureChatClient:
     """Thin wrapper around azure-ai-inference ChatCompletionsClient."""
 
     def __init__(self, *, endpoint: str, api_key: str, model: str, api_version: Optional[str] = None) -> None:
-        endpoint = _normalize_inference_endpoint(endpoint)
+        endpoint = endpoint
         kwargs = {}
         # azure-ai-inference supports passing client keywords (docs mention api_version)
         if api_version:
