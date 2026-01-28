@@ -158,14 +158,25 @@ _client: Optional[AzureChatClient] = None
 
 
 def get_response(prompt: str) -> str:
-    """Convenience function for the web UI."""
-    global _client
-    if _client is None:
-        s = _load_settings()
-        _client = AzureChatClient(
-            endpoint=s.endpoint,
-            api_key=s.api_key,
-            model=s.model,
-            api_version=s.api_version,
+    logger.info(
+        "get_response called | prompt_length=%d",
+        len(prompt) if prompt else 0
+    )
+
+    try:
+        response = _client.get_chat_response(prompt)
+
+        logger.info(
+            "get_response success | response_length=%d",
+            len(response) if response else 0
         )
-    return _client.get_chat_response(prompt)
+
+        return response
+
+    except Exception as exc:
+        logger.exception(
+            "get_response failed | error_type=%s | error_message=%s",
+            type(exc).__name__,
+            str(exc),
+        )
+        raise
