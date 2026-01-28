@@ -5,7 +5,7 @@ import sys
 from fastapi import FastAPI, Form
 from fastapi.responses import HTMLResponse
 
-import ai_communication
+from . import ai_communication
 
 LOG_LEVEL = logging.INFO
 
