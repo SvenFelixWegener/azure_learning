@@ -49,7 +49,7 @@ class Settings:
 def _load_settings() -> Settings:
     endpoint = os.getenv("AZURE_AI_INFERENCE_ENDPOINT") or os.getenv("AZURE_OPENAI_ENDPOINT")
     model = os.getenv("AZURE_AI_MODEL") or os.getenv("AZURE_OPENAI_DEPLOYMENT")
-    api_version = os.getenv("AZURE_AI_INFERENCE_API_VERSION") or os.getenv("AZURE_OPENAI_API_VERSION")
+    api_version = "2024-12-01-preview" #'os.getenv("AZURE_AI_INFERENCE_API_VERSION") or os.getenv("AZURE_OPENAI_API_VERSION")
 
     if not endpoint:
         raise ValueError(
