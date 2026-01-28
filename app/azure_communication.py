@@ -30,6 +30,10 @@ from azure.ai.inference import ChatCompletionsClient
 from azure.identity import DefaultAzureCredential
 from azure.keyvault.secrets import SecretClient
 
+import logging
+
+logger = logging.getLogger("azure_communication")
+logger.setLevel(logging.INFO)
 
 DEFAULT_SYSTEM_PROMPT = "You are a helpful assistant. Be concise and stay respectful."
 DEFAULT_SECRET_NAME = "api-key-ai"
@@ -99,6 +103,11 @@ def _load_settings() -> Settings:
     credential = DefaultAzureCredential()
     secret_client = SecretClient(vault_url=vault_url, credential=credential)
     api_key = secret_client.get_secret(secret_name).value
+
+    logger.info("Initializing AzureChatClient")
+    logger.info("  Endpoint: %s", endpoint)
+    logger.info("  Model: %s", model)
+    logger.info("  API Version: %s", api_version)
 
     return Settings(
         endpoint=_normalize_inference_endpoint(endpoint),
