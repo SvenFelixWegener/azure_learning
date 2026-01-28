@@ -1,12 +1,22 @@
 import html
+import logging
+import sys
 
 from fastapi import FastAPI, Form
 from fastapi.responses import HTMLResponse
 
 from . import azure_communication
 
-app = FastAPI()
+LOG_LEVEL = logging.INFO
 
+logging.basicConfig(
+    level=LOG_LEVEL,
+    format="%(asctime)s | %(levelname)s | %(name)s | %(message)s",
+    handlers=[logging.StreamHandler(sys.stdout)],
+    force=True,  # wichtig: überschreibt evtl. bestehende configs (uvicorn etc.)
+)
+
+app = FastAPI()
 
 def _render_page(
         *,

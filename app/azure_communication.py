@@ -32,7 +32,7 @@ from azure.keyvault.secrets import SecretClient
 
 import logging
 
-logger = logging.getLogger("azure_communication")
+logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
 DEFAULT_SYSTEM_PROMPT = "You are a helpful assistant. Be concise and stay respectful."
