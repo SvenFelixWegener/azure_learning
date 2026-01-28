@@ -5,7 +5,7 @@ import sys
 from fastapi import FastAPI, Form
 from fastapi.responses import HTMLResponse
 
-from . import azure_communication
+import azure_communication
 
 LOG_LEVEL = logging.INFO
 
