@@ -163,16 +163,6 @@ def _render_page(
         </div>
         {f"<div class='error'>{html.escape(error_text)}</div>" if error_text else ""}
         <form method="post" action="/submit" class="composer">
-          <div class="input-row">
-            <div>
-              <label for="name">Name</label>
-              <input id="name" name="name" type="text" value="{html.escape(name)}" required />
-            </div>
-            <div>
-              <label for="email">E-Mail (optional)</label>
-              <input id="email" name="email" type="email" value="" />
-            </div>
-          </div>
           <div>
             <label for="message">Nachricht</label>
             <textarea id="message" name="message" required>{html.escape(message)}</textarea>
@@ -194,13 +184,11 @@ def form():
 
 @app.post("/submit", response_class=HTMLResponse)
 def submit(
-        name: str = Form(...),
-        email: str = Form(""),  # optional
         message: str = Form(""),
 ):
     try:
         response_text = ai_communication.get_response(message)
-        return _render_page(name=name, message=message, response_text=response_text)
+        return _render_page(message=message, response_text=response_text)
     except Exception as exc:
         # In production you might want to log exc (without leaking secrets) and show a generic message.
-        return _render_page(name=name, message=message, error_text=str(exc))
+        return _render_page(message=message, error_text=str(exc))
