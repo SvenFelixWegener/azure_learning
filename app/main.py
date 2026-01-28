@@ -5,7 +5,7 @@ import sys
 from fastapi import FastAPI, Form
 from fastapi.responses import HTMLResponse
 
-import azure_communication
+import ai_communication
 
 LOG_LEVEL = logging.INFO
 
@@ -199,7 +199,7 @@ def submit(
         message: str = Form(""),
 ):
     try:
-        response_text = azure_communication.get_response(message)
+        response_text = ai_communication.get_response(message)
         return _render_page(name=name, message=message, response_text=response_text)
     except Exception as exc:
         # In production you might want to log exc (without leaking secrets) and show a generic message.
