@@ -1,3 +1,5 @@
+import os
+
 from azure.ai.inference import ChatCompletionsClient
 from azure.core.credentials import AzureKeyCredential
 from azure.identity import DefaultAzureCredential
@@ -16,7 +18,7 @@ class AzureChatClient:
             model: str,
     ) -> None:
         self._client = ChatCompletionsClient(
-            endpoint=endpoint,  # cognitiveservices.azure.com
+            endpoint=endpoint,  # Foundry endpoint (cognitiveservices.azure.com)
             credential=AzureKeyCredential(api_key),
         )
         self._model = model
@@ -40,24 +42,63 @@ class AzureChatClient:
             model=model,
         )
 
-def get_response(
-        prompt: str
-) -> str:
+    def get_chat_response(
+            self,
+            prompt: str,
+            *,
+            system_prompt: str = DEFAULT_SYSTEM_PROMPT,
+            max_tokens: int = 1024,
+    ) -> str:
+        response = self._client.complete(
+            model=self._model,  # e.g. "gpt-5.2-chat"
+            messages=[
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": prompt},
+            ],
+            max_tokens=max_tokens,
+        )
+        return response.choices[0].message.content or ""
+
+
+def get_response(prompt: str) -> str:
+    """
+    Backwards-compatible alias for your main.py call: azure_module.get_response(message)
+    """
     return get_chat_response(prompt)
 
+
 def get_chat_response(
-        self,
         prompt: str,
         *,
         system_prompt: str = DEFAULT_SYSTEM_PROMPT,
         max_tokens: int = 1024,
 ) -> str:
-    response = self._client.complete(
-        model=self._model,  # gpt-5.2-chat
-        messages=[
-            {"role": "system", "content": system_prompt},
-            {"role": "user", "content": prompt},
-        ],
+    """
+    Module-level convenience wrapper that:
+    - reads env vars
+    - loads api key from Key Vault
+    - calls Foundry model
+    """
+    endpoint = os.getenv("AZURE_AI_INFERENCE_ENDPOINT")
+    model = os.getenv("AZURE_AI_MODEL")
+    vault_url = os.getenv("AZURE_KEY_VAULT_URL")
+    secret_name = os.getenv("AZURE_KEY_VAULT_SECRET_NAME", DEFAULT_SECRET_NAME)
+
+    if not endpoint or not model or not vault_url:
+        raise ValueError(
+            "Missing configuration. Set AZURE_AI_INFERENCE_ENDPOINT, "
+            "AZURE_AI_MODEL, and AZURE_KEY_VAULT_URL."
+        )
+
+    client = AzureChatClient.from_key_vault(
+        endpoint=endpoint,
+        model=model,
+        vault_url=vault_url,
+        secret_name=secret_name,
+    )
+
+    return client.get_chat_response(
+        prompt,
+        system_prompt=system_prompt,
         max_tokens=max_tokens,
     )
-    return response.choices[0].message.content or ""

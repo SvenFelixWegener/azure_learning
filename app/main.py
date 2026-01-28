@@ -1,11 +1,12 @@
 import html
-import importlib.util
-from pathlib import Path
 
 from fastapi import FastAPI, Form
 from fastapi.responses import HTMLResponse
 
+from app import azure_communication  # normaler Import im selben Package
+
 app = FastAPI()
+
 
 def _render_page(
         *,
@@ -175,19 +176,10 @@ def _render_page(
 </html>
 """
 
+
 @app.get("/", response_class=HTMLResponse)
 def form():
     return _render_page()
-
-
-def _load_azure_communication():
-    module_path = Path(__file__).with_name("azure_communication.py")
-    spec = importlib.util.spec_from_file_location("azure_communication", module_path)
-    if spec is None or spec.loader is None:
-        raise ImportError("Could not load azure-communication module.")
-    module = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(module)
-    return module
 
 
 @app.post("/submit", response_class=HTMLResponse)
@@ -196,9 +188,8 @@ def submit(
         email: str = Form(...),
         message: str = Form(""),
 ):
-    azure_module = _load_azure_communication()
     try:
-        response_text = azure_module.get_response(message)
+        response_text = azure_communication.get_response(message)
         return _render_page(name=name, message=message, response_text=response_text)
     except ValueError as exc:
         return _render_page(name=name, message=message, error_text=str(exc))
