@@ -55,7 +55,7 @@ def _render_page(
         font-family: "Segoe UI", system-ui, sans-serif;
         margin: 0;
         padding: 32px;
-        background: radial-gradient(circle at top, #1e293b 0%, #0b1020 55%);
+        background: radial-gradient(circle at top, var(--bg), 0%, #0b1020 55%);
         color: var(--text);
       }}
       .container {{
@@ -80,7 +80,7 @@ def _render_page(
         gap: 20px;
       }}
       .chat-window {{
-        background: var(--card);
+        background: var(--bg);
         border-radius: 16px;
         border: 1px solid var(--border);
         padding: 20px;
@@ -122,7 +122,7 @@ def _render_page(
         padding: 12px 14px;
         border-radius: 10px;
         border: 1px solid var(--border);
-        background: #0b1224;
+        background: var(--bg);
         color: var(--text);
         font-size: 1rem;
       }}
