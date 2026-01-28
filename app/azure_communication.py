@@ -163,6 +163,16 @@ def get_response(prompt: str) -> str:
         len(prompt) if prompt else 0
     )
 
+    global _client
+    if _client is None:
+        s = _load_settings()
+        _client = AzureChatClient(
+            endpoint=s.endpoint,
+            api_key=s.api_key,
+            model=s.model,
+            api_version=s.api_version,
+        )
+
     try:
         response = _client.get_chat_response(prompt)
 
