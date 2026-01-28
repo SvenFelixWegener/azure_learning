@@ -3,7 +3,7 @@ import html
 from fastapi import FastAPI, Form
 from fastapi.responses import HTMLResponse
 
-from app import azure_communication  # normaler Import im selben Package
+from . import azure_communication
 
 app = FastAPI()
 
@@ -159,8 +159,8 @@ def _render_page(
               <input id="name" name="name" type="text" value="{html.escape(name)}" required />
             </div>
             <div>
-              <label for="email">E-Mail</label>
-              <input id="email" name="email" type="email" />
+              <label for="email">E-Mail (optional)</label>
+              <input id="email" name="email" type="email" value="" />
             </div>
           </div>
           <div>
@@ -185,11 +185,12 @@ def form():
 @app.post("/submit", response_class=HTMLResponse)
 def submit(
         name: str = Form(...),
-        email: str = Form(...),
+        email: str = Form(""),  # optional
         message: str = Form(""),
 ):
     try:
         response_text = azure_communication.get_response(message)
         return _render_page(name=name, message=message, response_text=response_text)
-    except ValueError as exc:
+    except Exception as exc:
+        # In production you might want to log exc (without leaking secrets) and show a generic message.
         return _render_page(name=name, message=message, error_text=str(exc))
